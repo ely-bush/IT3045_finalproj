@@ -1,6 +1,6 @@
 ﻿namespace IT3045_finalproj.Models
 {
-    public class FavoriteFood
+    public class Food
     {
     }
 }
