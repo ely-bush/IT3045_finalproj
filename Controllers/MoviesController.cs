@@ -21,21 +21,17 @@ namespace IT3045_finalproj.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Movie>>> GetMovies()
+        [HttpGet("{id?}")]
+        public async Task<ActionResult<IEnumerable<Movie>>> GetMovies(int? id)
         {
-            return await _context.Movies.ToListAsync();
-        }
+            if (id == null || id == 0)
+                return await _context.Movies.Take(5).ToListAsync();
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Movie>> GetMovie(int id)
-        {
             var movie = await _context.Movies.FindAsync(id);
             if (movie == null)
-            {
                 return NotFound();
-            }
-            return movie;
+
+            return new List<Movie> { movie };
         }
 
         [HttpPost]
@@ -43,7 +39,7 @@ namespace IT3045_finalproj.Controllers
         {
             _context.Movies.Add(movie);
             await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetMovie), new { id = movie.MovieId }, movie);
+            return CreatedAtAction(nameof(GetMovies), new { id = movie.MovieId }, movie);
         }
 
         [HttpPut("{id}")]

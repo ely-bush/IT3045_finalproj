@@ -19,21 +19,17 @@ namespace IT3045_finalproj.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Food>>> GetFoods()
+        [HttpGet("{id?}")]
+        public async Task<ActionResult<IEnumerable<Food>>> GetFoods(int? id)
         {
-            return await _context.Foods.ToListAsync();
-        }
+            if (id == null || id == 0)
+                return await _context.Foods.Take(5).ToListAsync();
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Food>> GetFood(int id)
-        {
             var food = await _context.Foods.FindAsync(id);
-
             if (food == null)
                 return NotFound();
 
-            return food;
+            return new List<Food> { food };
         }
 
         [HttpPost]
@@ -42,7 +38,7 @@ namespace IT3045_finalproj.Controllers
             _context.Foods.Add(food);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetFood), new { id = food.FoodId }, food);
+            return CreatedAtAction(nameof(GetFoods), new { id = food.FoodId }, food);
         }
 
         [HttpPut("{id}")]

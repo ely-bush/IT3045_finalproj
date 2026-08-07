@@ -19,21 +19,17 @@ namespace IT3045_finalproj.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Hobby>>> GetHobbies()
+        [HttpGet("{id?}")]
+        public async Task<ActionResult<IEnumerable<Hobby>>> GetHobbies(int? id)
         {
-            return await _context.Hobbies.ToListAsync();
-        }
+            if (id == null || id == 0)
+                return await _context.Hobbies.Take(5).ToListAsync();
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Hobby>> GetHobby(int id)
-        {
             var hobby = await _context.Hobbies.FindAsync(id);
-
             if (hobby == null)
                 return NotFound();
 
-            return hobby;
+            return new List<Hobby> { hobby };
         }
 
         [HttpPost]
@@ -42,7 +38,7 @@ namespace IT3045_finalproj.Controllers
             _context.Hobbies.Add(hobby);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetHobby), new { id = hobby.HobbyId }, hobby);
+            return CreatedAtAction(nameof(GetHobbies), new { id = hobby.HobbyId }, hobby);
         }
 
         [HttpPut("{id}")]

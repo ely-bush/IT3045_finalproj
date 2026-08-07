@@ -21,21 +21,17 @@ namespace IT3045_finalproj.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<TeamMember>>> GetTeamMembers()
+        [HttpGet("{id?}")]
+        public async Task<ActionResult<IEnumerable<TeamMember>>> GetTeamMembers(int? id)
         {
-            return await _context.TeamMembers.ToListAsync();
-        }
+            if (id == null || id == 0)
+                return await _context.TeamMembers.Take(5).ToListAsync();
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<TeamMember>> GetTeamMember(int id)
-        {
-            var teamMember = await _context.TeamMembers.FindAsync(id);
-            if (teamMember == null)
-            {
+            var member = await _context.TeamMembers.FindAsync(id);
+            if (member == null)
                 return NotFound();
-            }
-            return teamMember;
+
+            return new List<TeamMember> { member };
         }
 
         [HttpPost]
@@ -43,7 +39,7 @@ namespace IT3045_finalproj.Controllers
         {
             _context.TeamMembers.Add(teamMember);
             await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetTeamMember), new { id = teamMember.TeamMemberID }, teamMember);
+            return CreatedAtAction(nameof(GetTeamMembers), new { id = teamMember.TeamMemberID }, teamMember);
         }
 
         [HttpPut("{id}")]
