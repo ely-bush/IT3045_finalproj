@@ -1,0 +1,11 @@
+@IT3045_finalproj_HostAddress = http://localhost:5108
+
+GET {{IT3045_finalproj_HostAddress}}/todos/
+Accept: application/json
+
+###
+
+GET {{IT3045_finalproj_HostAddress}}/todos/1
+Accept: application/json
+
+###
