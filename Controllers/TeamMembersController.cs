@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using IT3045_finalproj.Data;
+using IT3045_finalproj.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using IT3045_finalproj.Data;
-using IT3045_finalproj.Models;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using YamlDotNet.Serialization;
 
 
 namespace IT3045_finalproj.Controllers
@@ -49,31 +50,23 @@ namespace IT3045_finalproj.Controllers
         public async Task<IActionResult> PutTeamMember(int id, TeamMember teamMember)
         {
             if (id != teamMember.TeamMemberID)
-            {
                 return BadRequest();
 
-                _context.Entry(teamMember).state = EntityState.Modified;
+            _context.Entry(teamMember).State = EntityState.Modified;
 
-                try
-                { 
-                    await _context.SaveChangesAsync();
-                }
-
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TeamMemberExists(id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-
-                return NoContent();
-
+            try
+            {
+                await _context.SaveChangesAsync();
             }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!_context.TeamMembers.Any(e => e.TeamMemberID == id))
+                    return NotFound();
+                else
+                    throw;
+            }
+
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
