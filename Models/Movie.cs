@@ -1,4 +1,7 @@
-﻿namespace IT3045_finalproj.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+
+namespace IT3045_finalproj.Models
 {
     public class Movie
     {
