@@ -6,7 +6,7 @@ namespace IT3045_finalproj.Models
     public class TeamMember
     {
         [Key]
-        public int TeamMemberID { get; set; }
+        public int TeamMemberId { get; set; }
 
         [Required]
         public string Name { get; set; }

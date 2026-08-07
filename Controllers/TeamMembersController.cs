@@ -39,13 +39,13 @@ namespace IT3045_finalproj.Controllers
         {
             _context.TeamMembers.Add(teamMember);
             await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetTeamMembers), new { id = teamMember.TeamMemberID }, teamMember);
+            return CreatedAtAction(nameof(GetTeamMembers), new { id = teamMember.TeamMemberId }, teamMember);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTeamMember(int id, TeamMember teamMember)
         {
-            if (id != teamMember.TeamMemberID)
+            if (id != teamMember.TeamMemberId)
                 return BadRequest();
 
             _context.Entry(teamMember).State = EntityState.Modified;
@@ -56,7 +56,7 @@ namespace IT3045_finalproj.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!_context.TeamMembers.Any(e => e.TeamMemberID == id))
+                if (!_context.TeamMembers.Any(e => e.TeamMemberId == id))
                     return NotFound();
                 else
                     throw;
