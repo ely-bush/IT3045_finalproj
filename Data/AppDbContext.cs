@@ -17,23 +17,23 @@ namespace IT3045_finalproj.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<TeamMember>().HasData(
-                new TeamMember { Name = "Owen Example", BirthDate = new DateTime(2003, 4, 12), CollegeProgram = "Computer Science", YearInProgram = "Senior" },
-                new TeamMember { Name = "Jane Doe", BirthDate = new DateTime(2002, 9, 3), CollegeProgram = "Information Technology", YearInProgram = "Junior" }
+                new TeamMember { Name = "Owen O'Connell", BirthDate = new DateTime(2006, 2, 3), CollegeProgram = "Information Technology", YearInProgram = "Junior" },
+                new TeamMember { Name = "Ely Bush", BirthDate = new DateTime(2005, 12, 27), CollegeProgram = "Information Technology", YearInProgram = "Junior" }
             );
 
             modelBuilder.Entity<Hobby>().HasData(
                 new Hobby { Name = "Basketball", Category = "Sports", HoursPerWeek = 5, Description = "Pickup games on weekends" },
-                new Hobby { Name = "Gaming", Category = "Indoor", HoursPerWeek = 8, Description = "PC and console games" }
+                new Hobby { Name = "Knitting", Category = "Indoor", HoursPerWeek = 10, Description = "Little projects while watching TV" }
             );
 
             modelBuilder.Entity<Food>().HasData(
-                new Food { FoodName = "Pancakes", MealType = "Breakfast", Calories = 350, IsVegetarian = true },
-                new Food { FoodName = "Bacon", MealType = "Breakfast", Calories = 250, IsVegetarian = false }
+                new Food { FoodName = "Pizza", MealType = "Dinner", Calories = 500, IsVegetarian = false },
+                new Food { FoodName = "Onion Rings", MealType = "Snack", Calories = 300, IsVegetarian = true }
             );
 
             modelBuilder.Entity<Movie>().HasData(
                 new Movie { Title = "Inception", Genre = "Sci-Fi", ReleaseYear = 2010, Rating = 8.8 },
-                new Movie { Title = "The Godfather", Genre = "Drama", ReleaseYear = 1972, Rating = 9.2 }
+                new Movie { Title = "Saltburn", Genre = "Thriller", ReleaseYear = 2023, Rating = 7.0 }
             );
         }
     }
